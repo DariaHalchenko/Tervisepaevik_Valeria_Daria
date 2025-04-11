@@ -11,6 +11,11 @@ namespace Tervisepaevik_Valeria_Daria.ViewModels
 
         private Kasutajad kasutaja;
 
+        public KasutajadViewModel(Kasutajad kasutaja = null)
+        {
+            this.kasutaja = kasutaja ?? new Kasutajad();
+        }
+
         public KasutajadViewModel()
         {
             kasutaja = new Kasutajad();
@@ -52,6 +57,19 @@ namespace Tervisepaevik_Valeria_Daria.ViewModels
                     kasutaja.Vanus = value;
                     OnPropertyChanged(nameof(Vanus));
                 }
+            }
+        }
+
+        public string VanusString
+        {
+            get => kasutaja.Vanus.ToString();
+            set
+            {
+                if (int.TryParse(value, out int result))
+                {
+                    Vanus = result;
+                }
+                OnPropertyChanged(nameof(VanusString));
             }
         }
 

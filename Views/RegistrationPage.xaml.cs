@@ -1,4 +1,5 @@
-using Tervisepaevik_Valeria_Daria.Models;
+﻿using Tervisepaevik_Valeria_Daria.Models;
+using Tervisepaevik_Valeria_Daria.ViewModels;
 
 namespace Tervisepaevik_Valeria_Daria.Views;
 
@@ -10,7 +11,9 @@ public partial class RegistrationPage : ContentPage
     StackLayout sl;
 	public RegistrationPage()
 	{
-        this.BindingContext = new Kasutajad();
+        var viewModel = new KasutajadViewModel();
+        this.BindingContext = viewModel;
+
         lbl_nimi = new Label { Text = "Nimi: " };
         lbl_vanus = new Label { Text = "Vanus: " };
         lbl_email = new Label { Text = "Email: " };
@@ -18,16 +21,47 @@ public partial class RegistrationPage : ContentPage
         lbl_kaal = new Label { Text = "Kaal: " };
         lbl_pikkus = new Label { Text = "Pikkus: " };
 
-        e_nimi = new Entry { Text = "Sisestage oma nimi", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
-        e_vanus = new Entry { Text = "Sisestage oma vanus", Keyboard = Keyboard.Numeric, 
-            FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
-        e_email = new Entry { Text = "Sisestage oma e-posti aadress", Keyboard= Keyboard.Email,
-            FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
-        e_parool = new Entry { Text = "Sisestage parool", IsPassword = true };
-        e_kaal = new Entry { Text= "Sisestage kaal",Keyboard = Keyboard.Numeric,
-            FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
-        e_pikkus = new Entry { Text = "Sisestage oma pikkus", Keyboard = Keyboard.Numeric,
-            FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
+        e_nimi = new Entry
+        {
+            Placeholder = "Sisestage oma nimi",
+        };
+        e_nimi.SetBinding(Entry.TextProperty, nameof(KasutajadViewModel.Nimi), BindingMode.TwoWay);
+
+        e_vanus = new Entry
+        {
+            Placeholder = "Sisestage oma vanus",
+            Keyboard = Keyboard.Numeric,
+        };
+        e_vanus.SetBinding(Entry.TextProperty, nameof(KasutajadViewModel.VanusString), BindingMode.TwoWay);
+
+        e_email = new Entry
+        {
+            Placeholder = "Sisestage oma e-posti aadress",
+            Keyboard = Keyboard.Email,
+        };
+        e_email.SetBinding(Entry.TextProperty, nameof(KasutajadViewModel.Email), BindingMode.TwoWay);
+
+        e_parool = new Entry
+        {
+            Placeholder = "Sisestage parool",
+            IsPassword = true
+        };
+        e_parool.SetBinding(Entry.TextProperty, nameof(KasutajadViewModel.Parool), BindingMode.TwoWay);
+
+        e_kaal = new Entry
+        {
+            Placeholder = "Sisestage kaal",
+            Keyboard = Keyboard.Numeric,
+        };
+        e_kaal.SetBinding(Entry.TextProperty, nameof(KasutajadViewModel.Kaal), BindingMode.TwoWay);
+
+        e_pikkus = new Entry
+        {
+            Placeholder = "Sisestage oma pikkus",
+            Keyboard = Keyboard.Numeric,
+        };
+        e_pikkus.SetBinding(Entry.TextProperty, nameof(KasutajadViewModel.Pikkus), BindingMode.TwoWay);
+
 
         btn_salvesta = new Button
         {
@@ -76,11 +110,28 @@ public partial class RegistrationPage : ContentPage
 
     private void Btn_salvesta_Clicked(object? sender, EventArgs e)
     {
-        var kasutajad = (Kasutajad)BindingContext;
-        if (kasutajad!= null && !String.IsNullOrEmpty(kasutajad.Nimi))
+        if (BindingContext is KasutajadViewModel viewModel)
         {
-            App.Database.SaveItem(kasutajad);
+            if (viewModel.IsValid)
+            {
+                var kasutaja = new Kasutajad
+                {
+                    Id = viewModel.Kasutajad_Id,
+                    Nimi = viewModel.Nimi,
+                    Vanus = viewModel.Vanus,
+                    Email = viewModel.Email,
+                    Parool = viewModel.Parool,
+                    Kaal = viewModel.Kaal,
+                    Pikkus = viewModel.Pikkus
+                };
+
+                App.Database.SaveItem(kasutaja);
+                this.Navigation.PopAsync();
+            }
+            else
+            {
+                DisplayAlert("Viga", "Palun täitke kõik väljad korrektselt", "OK");
+            }
         }
-        this.Navigation.PopAsync();
     }
 }

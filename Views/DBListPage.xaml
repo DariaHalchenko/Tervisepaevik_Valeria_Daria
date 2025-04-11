@@ -9,7 +9,7 @@
                     <ViewCell>
                         <ViewCell.View>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" FontSize="Medium"/>
+                                <Label Text="{Binding Nimi}" FontSize="Medium"/>
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>

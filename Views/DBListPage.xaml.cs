@@ -1,4 +1,5 @@
 ﻿using Tervisepaevik_Valeria_Daria.Models;
+using Tervisepaevik_Valeria_Daria.ViewModels;
 
 namespace Tervisepaevik_Valeria_Daria.Views
 {
@@ -19,18 +20,20 @@ namespace Tervisepaevik_Valeria_Daria.Views
         // обработка нажатия элемента в списке
         private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            Kasutajad selectedFriend = (Kasutajad)e.SelectedItem;
-            RegistrationPage friendPage = new RegistrationPage();
-            friendPage.BindingContext = selectedFriend;
-            await Navigation.PushAsync(friendPage);
+            if (e.SelectedItem is Kasutajad selectedFriend)
+            {
+                RegistrationPage friendPage = new RegistrationPage();
+                friendPage.BindingContext = new KasutajadViewModel(selectedFriend);
+                await Navigation.PushAsync(friendPage);
+            }
         }
 
         // обработка нажатия кнопки добавления
         private async void CreateFriend(object sender, EventArgs e)
         {
-            Kasutajad friend = new Kasutajad();
+            var viewModel = new KasutajadViewModel();
             RegistrationPage friendPage = new RegistrationPage();
-            friendPage.BindingContext = friend;
+            friendPage.BindingContext = viewModel;
             await Navigation.PushAsync(friendPage);
         }
     }
