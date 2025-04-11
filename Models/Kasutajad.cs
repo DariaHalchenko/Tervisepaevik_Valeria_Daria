@@ -12,7 +12,7 @@ namespace Tervisepaevik_Valeria_Daria.Models
     public class Kasutajad
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
-        public int Kasutajad_Id { get; set; }
+        public int Id { get; set; }
         public string Nimi { get; set; }
         public int Vanus { get; set; }
         public string Email { get; set; }

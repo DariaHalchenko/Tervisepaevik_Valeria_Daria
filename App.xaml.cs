@@ -1,4 +1,5 @@
 ﻿using Tervisepaevik_Valeria_Daria.Models;
+using Tervisepaevik_Valeria_Daria.Views;
 
 namespace Tervisepaevik_Valeria_Daria
 {
@@ -23,7 +24,7 @@ namespace Tervisepaevik_Valeria_Daria
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new DBListPage());
+            MainPage = new NavigationPage(new RegistrationPage());
         }
     }
 }

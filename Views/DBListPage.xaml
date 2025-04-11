@@ -16,6 +16,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Lisa" Clicked="LisaKasutajad"/>
     </StackLayout>
 </ContentPage>

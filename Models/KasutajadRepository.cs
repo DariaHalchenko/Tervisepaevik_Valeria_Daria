@@ -30,10 +30,10 @@ namespace Tervisepaevik_Valeria_Daria.Models
         }
         public int SaveItem(Kasutajad item)
         {
-            if (item.Kasutajad_Id !=0)
+            if (item.Id !=0)
             {
                 database.Update(item);
-                return item.Kasutajad_Id;
+                return item.Id;
             }
             else
             {

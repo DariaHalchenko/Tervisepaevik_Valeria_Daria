@@ -1,3 +1,5 @@
+using Tervisepaevik_Valeria_Daria.Views;
+
 namespace Tervisepaevik_Valeria_Daria;
 
 public partial class StartPage : ContentPage
@@ -43,6 +45,6 @@ public partial class StartPage : ContentPage
     {
         bool valik = await DisplayAlert("Login", "Kas soovite sisse logida?", "Jah", "Ei");
         //await DisplayAlert("Login", "Teie valik on: " + (valik ? "Jah" : "Ei"), "OK");
-        await Navigation.PushAsync(new LoginPage());
+        //await Navigation.PushAsync(new LoginPage());
     }
 }

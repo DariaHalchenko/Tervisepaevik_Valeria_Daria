@@ -18,12 +18,12 @@ namespace Tervisepaevik_Valeria_Daria.ViewModels
 
         public int Kasutajad_Id
         {
-            get { return kasutaja.Kasutajad_Id; }
+            get { return kasutaja.Id; }
             set
             {
-                if (kasutaja.Kasutajad_Id != value)
+                if (kasutaja.Id != value)
                 {
-                    kasutaja.Kasutajad_Id = value;
+                    kasutaja.Id = value;
                     OnPropertyChanged(nameof(Kasutajad_Id));
                 }
             }

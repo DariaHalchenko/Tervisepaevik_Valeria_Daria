@@ -1,10 +1,13 @@
+using Tervisepaevik_Valeria_Daria.Models;
+
 namespace Tervisepaevik_Valeria_Daria.Views;
 
 public partial class RegistrationPage : ContentPage
 {
 	Label lbl_nimi, lbl_vanus, lbl_email, lbl_parool, lbl_kaal, lbl_pikkus;
 	Entry e_nimi, e_vanus, e_email, e_parool, e_kaal, e_pikkus;
-	Button btn_salvesta;
+	Button btn_salvesta, btn_kustuta, btn_exit;
+    StackLayout sl;
 	public RegistrationPage()
 	{
 		lbl_nimi = new Label { Text = "Nimi: " };
@@ -24,5 +27,50 @@ public partial class RegistrationPage : ContentPage
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
         e_pikkus = new Entry { Text = "Sisestage oma pikkus", Keyboard = Keyboard.Numeric,
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Entry)) };
+
+        btn_salvesta = new Button
+        {
+            Text = "Salvesta"
+        };
+        btn_salvesta.Clicked += Btn_salvesta_Clicked;
+        btn_kustuta = new Button
+        {
+            Text = "Salvesta"
+        };
+        btn_kustuta.Clicked += Btn_kustuta_Clicked;
+        btn_exit = new Button
+        {
+            Text = "Salvesta"
+        };
+        btn_exit.Clicked += Btn_exit_Clicked;
+
+        sl = new StackLayout
+        {
+            Children = { lbl_nimi, e_nimi, lbl_vanus, e_vanus, lbl_email, e_email, lbl_parool, e_parool, lbl_kaal, e_kaal, lbl_pikkus, e_pikkus,
+            btn_salvesta, btn_kustuta, btn_exit}
+        };
+        Content = sl;
+    }
+
+    private void Btn_exit_Clicked(object? sender, EventArgs e)
+    {
+        this.Navigation.PopAsync();
+    }
+
+    private void Btn_kustuta_Clicked(object? sender, EventArgs e)
+    {
+        var kasutajad = (Kasutajad)BindingContext;
+        App.Database.DeleteItem(kasutajad.Id);
+        this.Navigation.PopAsync();
+    }
+
+    private void Btn_salvesta_Clicked(object? sender, EventArgs e)
+    {
+        var kasutajad = (Kasutajad)BindingContext;
+        if (!String.IsNullOrEmpty(kasutajad.Nimi))
+        {
+            App.Database.SaveItem(kasutajad);
+        }
+        this.Navigation.PopAsync();
     }
 }
